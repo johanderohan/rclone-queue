@@ -42,8 +42,8 @@ function rcloneStart(file) {
   var origin, destino;
   
   origin = file.file_dir+'/'+file.file_name;
-  destino = file.remote+':'+file.upload_dir+'/'+file.file_name;
-  if(parseInt(file.is_directory)) destino = file.remote+':'+file.upload_dir+'/';
+  destino = file.remote+':'+file.upload_dir+'/';
+  if(parseInt(file.is_directory)) destino = file.remote+':'+file.upload_dir+'/'+file.file_name;
 
   var rclone = spawn('rclone', ['-P', 'copy', origin , destino,'--ignore-existing']);
   
@@ -58,7 +58,7 @@ function rcloneStart(file) {
   rclone.on('exit', function (code) {
     //console.log('child process exited with code ' + code.toString());
     file.uploaded = true;
-    db.update({ _id: file._id }, file, {}, function (err, file) {
+    db.update({ _id: file._id }, file, {}, function (err, fileUp) {
       pushNotification(file);
       UPLOAD_IN_PROGRES = false;
     });
@@ -67,7 +67,7 @@ function rcloneStart(file) {
 
 function pushNotification(file) {
   var msg = {
-    message: file.file_name,	// required
+    message: 'File: '+file.file_name,	// required
     title: 'File uploaded to GDrive',
   }
   

@@ -16,4 +16,4 @@ else
     exit 1
 fi
 
-curl -s -d "upload_dir=$UPLOAD_DIR&file_dir=$TR_TORRENT_DIR&file_name=$TR_TORRENT_NAME&is_directory=$IS_DIRECTORY&remote=$REMOTE" -X POST http://localhost:3000/api/save > /dev/null
+curl -s -d "upload_dir=$UPLOAD_DIR&file_dir=$TR_TORRENT_DIR&file_name=$TR_TORRENT_NAME&is_directory=$IS_DIRECTORY&remote=$REMOTE" -X POST http://localhost:3040/api/save > /dev/null
