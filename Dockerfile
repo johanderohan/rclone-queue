@@ -1,6 +1,12 @@
 # Use the official image as a parent image.
 FROM node:current-slim
 
+RUN apt update
+RUN apt install curl -y
+RUN apt install zip -y
+#Install rclone
+RUN curl https://rclone.org/install.sh | bash
+
 # Set the working directory.
 WORKDIR /usr/src/app
 
@@ -11,7 +17,7 @@ COPY package.json .
 RUN npm install
 
 # Inform Docker that the container is listening on the specified port at runtime.
-EXPOSE 3000
+EXPOSE 3040
 
 # Run the specified command within the container.
 CMD [ "npm", "start" ]

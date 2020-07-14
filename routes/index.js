@@ -24,7 +24,6 @@ var UPLOAD_IN_PROGRES = false;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  rcloneStart();
   res.render('index', { title: 'Express' });
 });
 
@@ -78,7 +77,7 @@ function pushNotification(file) {
 
 cron.schedule('*/30 * * * * *', () => {
   if(!UPLOAD_IN_PROGRES){
-      console.log('CRON');
+      //console.log('CRON');
       db.findOne({ uploaded: false }, function (err, file) {
         if(file) {
           UPLOAD_IN_PROGRES = true;
