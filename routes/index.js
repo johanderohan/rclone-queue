@@ -21,15 +21,20 @@ var p = new Push( {
 })
 
 var UPLOAD_IN_PROGRES = false;
+var CURRENT_UPLOAD = {file_name:''};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	db.find({ uploaded: true }, function (err, files_uploaded) {
+		db.find({ uploaded: false }, function (err, files_queue) {
+  			res.render('index', { title: 'Rclone Status', uploaded: files_uploaded, current: CURRENT_UPLOAD, queue: files_queue });
+		});
+	});
 });
 
 router.post('/api/save', function(req, res) {
     req.body.uploaded = false;
-        
+    req.body.date = new Date();
     db.insert(req.body, function (err, newDoc) {   
       res.send(newDoc);
     });
@@ -38,6 +43,7 @@ router.post('/api/save', function(req, res) {
 
 function rcloneStart(file) {
   
+  CURRENT_UPLOAD = file;
   var origin, destino;
   
   origin = file.file_dir+'/'+file.file_name;
@@ -60,6 +66,7 @@ function rcloneStart(file) {
     db.update({ _id: file._id }, file, {}, function (err, fileUp) {
       pushNotification(file);
       UPLOAD_IN_PROGRES = false;
+      CURRENT_UPLOAD = {file_name:''};
     });
   });
 }

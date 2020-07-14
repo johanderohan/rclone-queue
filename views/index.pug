@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  if current.file_name
+    h1 Current upload
+    p=current.file_name
+  
+  if queue.length
+    h1 Queue
+    each val in queue
+      p= val.file_name
+
+  h1 Uploaded
+  each val in uploaded
+    p= val.file_name
