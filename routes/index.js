@@ -57,8 +57,12 @@ function rcloneStart(file) {
     var contains = data.toString().indexOf('Transferred');
     if(contains !== -1 ) {
       var substring = data.toString().substring(data.toString().lastIndexOf("Transferred") + 1, data.toString().lastIndexOf("100%"));
+      var substring_01 = data.toString().substring(substring.lastIndexOf(":") + 1, substring.lastIndexOf("/"));
+      var substring_02 = data.toString().substring(substring.lastIndexOf("/") + 1, substring.lastIndexOf(","));
       console.log('stdout: ' + data.toString());
       console.log('substring: ' + substring);
+      if(substring_01) console.log('substring_01: ' + substring_01);
+      if(substring_02) console.log('substring_02: ' + substring_02);
     }
   });
 
