@@ -55,7 +55,7 @@ function rcloneStart(file) {
   
   rclone.stdout.on('data', function (data) {
     var contains = data.toString().indexOf('/');
-    if(contains !== -1 ) console.log('stderr: ' + data.toString());
+    if(contains !== -1 ) console.log('stdout: ' + data.toString());
   });
 
   rclone.stderr.on('data', function (data) {
