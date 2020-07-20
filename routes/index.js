@@ -25,7 +25,7 @@ var CURRENT_UPLOAD = {file_name:''};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	db.find({ uploaded: true }, function (err, files_uploaded) {
+	db.find({ uploaded: true }).sort({ date: -1 }).exec(function (err, files_uploaded) {
 		db.find({ uploaded: false }, function (err, files_queue) {
   			res.render('index', { title: 'Rclone Status', uploaded: files_uploaded, current: CURRENT_UPLOAD, queue: files_queue });
 		});
@@ -44,6 +44,7 @@ router.post('/api/save', function(req, res) {
 function rcloneStart(file) {
   
   CURRENT_UPLOAD = file;
+  file.uploaded = true;
   var origin, destino;
   
   origin = file.file_dir+'/'+file.file_name;
@@ -53,16 +54,17 @@ function rcloneStart(file) {
   var rclone = spawn('rclone', ['-P', 'copy', origin , destino,'--ignore-existing']);
   
   rclone.stdout.on('data', function (data) {
-    console.log('stdout: ' + data.toString());
+    var contains = data.toString().indexOf('/');
+    if(contains !== -1 ) console.log('stderr: ' + data.toString());
   });
 
   rclone.stderr.on('data', function (data) {
     console.log('stderr: ' + data.toString());
+    file.uploaded = false;
   });
 
   rclone.on('exit', function (code) {
     //console.log('child process exited with code ' + code.toString());
-    file.uploaded = true;
     db.update({ _id: file._id }, file, {}, function (err, fileUp) {
       pushNotification(file);
       UPLOAD_IN_PROGRES = false;
