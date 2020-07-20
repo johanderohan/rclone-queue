@@ -54,8 +54,12 @@ function rcloneStart(file) {
   var rclone = spawn('rclone', ['-P', 'copy', origin , destino,'--ignore-existing']);
   
   rclone.stdout.on('data', function (data) {
-    var contains = data.toString().indexOf('/');
-    if(contains !== -1 ) console.log('stdout: ' + data.toString());
+    var contains = data.toString().indexOf('Transferred');
+    if(contains !== -1 ) {
+      var substring = str.substring(str.lastIndexOf("Transferred") + 1, str.lastIndexOf("100%"));
+      console.log('stdout: ' + data.toString());
+      console.log('substring: ' + substring);
+    }
   });
 
   rclone.stderr.on('data', function (data) {
