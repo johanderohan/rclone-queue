@@ -55,17 +55,23 @@ function rcloneStart(file) {
   
   rclone.stdout.on('data', function (data) {
     var contains = data.toString().indexOf('Transferred');
-    if(contains !== -1 ) {
-      var substring = data.toString().substring(data.toString().lastIndexOf("Transferred") + 1, data.toString().lastIndexOf("100%"));
-      var substring_01 = data.toString().substring(substring.lastIndexOf(":") + 1, substring.lastIndexOf("/"));
-      var substring_02 = data.toString().substring(substring.lastIndexOf("/") + 1, substring.lastIndexOf(","));
-      console.log('stdout: ' + data.toString());
+    //if(contains !== -1 ) {
+    //  var substring = data.toString().substring(data.toString().lastIndexOf("Transferred") + 1, data.toString().lastIndexOf("100%"));
+    //  var substring_01 = data.toString().substring(substring.lastIndexOf(":") + 1, substring.lastIndexOf("/"));
+    //  var substring_02 = data.toString().substring(substring.lastIndexOf("/") + 1, substring.lastIndexOf(","));
+      //console.log('stdout: ' + data.toString());
       var array_strings = data.toString().split(/\r?\n/);
-      console.log(array_strings);
+      if(array_strings.length > 1) {
+        console.log(array_strings[1]);
+        var substring_01 = data.toString().substring(array_strings[1].lastIndexOf(":") + 1, array_strings[1].lastIndexOf("/"));
+        var substring_02 = data.toString().substring(array_strings[1].lastIndexOf("/") + 1, array_strings[1].lastIndexOf(","));
+        if(substring_01) console.log('substring_01: ' + substring_01);
+        if(substring_02) console.log('substring_02: ' + substring_02);
+      }
       //console.log('substring: ' + substring);
       //if(substring_01) console.log('substring_01: ' + substring_01);
       //if(substring_02) console.log('substring_02: ' + substring_02);
-    }
+    //}
   });
 
   rclone.stderr.on('data', function (data) {
