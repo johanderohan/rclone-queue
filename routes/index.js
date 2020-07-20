@@ -34,6 +34,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/api/save', function(req, res) {
     req.body.uploaded = false;
+    req.body.file_name = decodeURIComponent(req.body.file_name);
     req.body.date = new Date();
     db.insert(req.body, function (err, newDoc) {   
       res.send(newDoc);
