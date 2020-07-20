@@ -2,10 +2,7 @@
 FROM debian:latest
 
 RUN apt update
-RUN apt install nodejs
-RUN apt install npm
-RUN apt install curl
-RUN apt install zip
+RUN apt install nodejs npm curl zip -y
 
 #Install rclone
 RUN curl https://rclone.org/install.sh | bash
