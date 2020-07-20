@@ -1,6 +1,8 @@
 # Use the official image as a parent image.
-FROM node:14-alpine
+FROM lsiobase/ubuntu:bionic
 
+RUN apk --no-cache add nodejs
+RUN apk --no-cache add npm
 RUN apk --no-cache add curl
 RUN apk --no-cache add zip
 
