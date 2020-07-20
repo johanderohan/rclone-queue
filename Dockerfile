@@ -1,10 +1,11 @@
 # Use the official image as a parent image.
 FROM debian:latest
 
-RUN apk --no-cache add nodejs
-RUN apk --no-cache add npm
-RUN apk --no-cache add curl
-RUN apk --no-cache add zip
+RUN apt update
+RUN apt install nodejs
+RUN apt install npm
+RUN apt install curl
+RUN apt install zip
 
 #Install rclone
 RUN curl https://rclone.org/install.sh | bash
