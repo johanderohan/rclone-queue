@@ -56,7 +56,7 @@ function rcloneStart(file) {
   rclone.stdout.on('data', function (data) {
     var contains = data.toString().indexOf('Transferred');
     if(contains !== -1 ) {
-      var substring = str.substring(str.lastIndexOf("Transferred") + 1, str.lastIndexOf("100%"));
+      var substring = data.toString().substring(data.toString().lastIndexOf("Transferred") + 1, data.toString().lastIndexOf("100%"));
       console.log('stdout: ' + data.toString());
       console.log('substring: ' + substring);
     }
