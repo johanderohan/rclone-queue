@@ -1,5 +1,5 @@
 # Use the official image as a parent image.
-FROM lsiobase/ubuntu:bionic
+FROM debian:latest
 
 RUN apk --no-cache add nodejs
 RUN apk --no-cache add npm
