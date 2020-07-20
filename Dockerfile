@@ -1,24 +1,26 @@
 # Use the official image as a parent image.
-FROM node:10-alpine
+FROM node:current-slim
 
-RUN apk --no-cache add curl
-RUN apk --no-cache add zip
-
+RUN apt update
+RUN apt install curl -y
+RUN apt install zip -y
 #Install rclone
 RUN curl https://rclone.org/install.sh | bash
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# Set the working directory.
+WORKDIR /usr/src/app
 
-WORKDIR /home/node/app
+# Copy the file from your host to your current location.
+COPY package.json .
 
-COPY package*.json ./
-
-USER node
-
+# Run the command inside your image filesystem.
 RUN npm install
 
-COPY --chown=node:node . .
-
+# Inform Docker that the container is listening on the specified port at runtime.
 EXPOSE 3040
 
+# Run the specified command within the container.
 CMD [ "npm", "start" ]
+
+# Copy the rest of your app's source code from your host to your image filesystem.
+COPY . .
