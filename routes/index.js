@@ -63,6 +63,8 @@ function rcloneStart(file) {
       var array_strings = data.toString().split(/\r?\n/);
       if(array_strings.length > 1) {
         console.log(array_strings[1]);
+        var substring_01 = array_strings[1].split("/");
+        if(substring_01.length) console.log(substring_01);
       }
       //console.log('substring: ' + substring);
       //if(substring_01) console.log('substring_01: ' + substring_01);
