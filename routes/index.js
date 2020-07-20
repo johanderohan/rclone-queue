@@ -64,7 +64,12 @@ function rcloneStart(file) {
       if(array_strings.length > 1) {
         console.log(array_strings[1]);
         var substring_01 = array_strings[1].split("/");
-        if(substring_01.length) console.log(substring_01);
+        if(substring_01.length) {
+          var substring_011 = substring_01[0].split(":");
+          var substring_012 = substring_01[1].split(",");
+          console.log(substring_011[1]);
+          console.log(substring_012[0]);
+        }
       }
       //console.log('substring: ' + substring);
       //if(substring_01) console.log('substring_01: ' + substring_01);

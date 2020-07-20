@@ -1,9 +1,8 @@
 # Use the official image as a parent image.
-FROM node:10-alpine
+FROM node:14-alpine
 
-RUN apt update
-RUN apt install curl -y
-RUN apt install zip -y
+RUN apk --no-cache add curl
+RUN apk --no-cache add zip
 
 #Install rclone
 RUN curl https://rclone.org/install.sh | bash
