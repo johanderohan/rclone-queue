@@ -13,7 +13,7 @@
     "morgan": "~1.9.1",
     "nedb": "^1.8.0",
     "node-cron": "^2.0.3",
-    "pug": "2.0.0-beta11",
+    "pug": "3.0.1",
     "pushover-notifications": "^1.2.2"
   }
 }
